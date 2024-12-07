@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dnnpf1431v2yf"]
+
+[ext_resource type="Texture2D" uid="uid://doqi7nsa5wvh5" path="res://art/nikacado_skinny_comp.png" id="1_rwl15"]
+
+[node name="Node" type="Node"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_rwl15")
