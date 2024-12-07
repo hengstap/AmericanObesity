@@ -1,0 +1,9 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+/art/Food/
+/art/Food\ and\ Store/
+/art/FreePixelFood/
+/art/More\ Food/
+/art/Pallettes/
+/art/*.png
