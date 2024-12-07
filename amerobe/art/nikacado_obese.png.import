@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cv4pd8jquu7kv"
-path="res://.godot/imported/Kitchen Pixel Art.png-7bb794ca2a3c291c6e31fda29bedf990.ctex"
+uid="uid://06py0h2o8gax"
+path="res://.godot/imported/nikacado_obese.png-770d95f6f6be3e4f30c4c787200c6e8f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/Kitchen Pixel Art.png"
-dest_files=["res://.godot/imported/Kitchen Pixel Art.png-7bb794ca2a3c291c6e31fda29bedf990.ctex"]
+source_file="res://art/nikacado_obese.png"
+dest_files=["res://.godot/imported/nikacado_obese.png-770d95f6f6be3e4f30c4c787200c6e8f.ctex"]
 
 [params]
 

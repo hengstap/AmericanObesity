@@ -53,7 +53,10 @@ func _ready() -> void:
 	pass
 
 func _process(_delta: float) -> void:
-	_quit_complete = await run_scoring_loop()
+	print("We made it")
+	while true:
+		pass
+	# _quit_complete = await run_scoring_loop()
 	
 
 func run_scoring_loop() -> bool:
