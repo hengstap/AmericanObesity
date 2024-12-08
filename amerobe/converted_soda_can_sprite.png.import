@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bh7qwqioejnuk"
-valid=false
+uid="uid://diifn5qvjg2rb"
+path="res://.godot/imported/converted_soda_can_sprite.png-5caaf49031c056d3d36ba3e28159bcce.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
-source_file="res://art/nikacado_super_obese.png"
+source_file="res://converted_soda_can_sprite.png"
+dest_files=["res://.godot/imported/converted_soda_can_sprite.png-5caaf49031c056d3d36ba3e28159bcce.ctex"]
 
 [params]
 

@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bh7qwqioejnuk"
-valid=false
+uid="uid://cwbwho115ksys"
+path="res://.godot/imported/kitchen_background_8bit.png-9661e6cb3ba69050a605db2ed7813695.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
-source_file="res://art/nikacado_super_obese.png"
+source_file="res://art/kitchen_background_8bit.png"
+dest_files=["res://.godot/imported/kitchen_background_8bit.png-9661e6cb3ba69050a605db2ed7813695.ctex"]
 
 [params]
 
