@@ -1,53 +1,28 @@
-# Filename: res://clickbutt.gd
-"""md
-# Clickbutt
----
-> Official documentation for its inherited
-> functionality can be found at https://docs.godotengine.org/en/latest/classes/class_collisionobject2d.html
-## Description:
-	TODO
-## Properties:
-	TODO
-	> Inherited from [CollisionObject2D](https://docs.godotengine.org/en/latest/classes/class_collisionobject2d.html#properties)
-"""
 class_name Clickbutt
-extends CollisionShape2D
+extends Area2D  # Use Area2D to detect input events
 
-signal click
-# TODO: Make `score` a read-only view of a protected engine-backed `score`.
-# `score` is the number of clicks the player has made + the number of artificial clicks
-# made by the environment.
-@export var score: int = 0
+signal click  # Signal to notify a click event
+
+@export var score: int = 0  # Track clicks
 @export var is_mouseover: bool = false
 @export var quit: bool = false
 @export var _quit_complete: bool = false
-var collider: CollisionObject2D = $CollisionObject2D
-# If true, this object is pickable. 
-# A pickable object can detect the mouse pointer entering/leaving, and if the mouse is inside it, 
-# report input events. 
-# **Requires at least one collision_layer bit to be set.**
-# Able to be modified by getter and setter functions.
-# var is_pickable: bool = true;
 
-"""
-Accepts unhandled InputEvents. shape_idx is the child index of the clicked Shape2D. 
-Connect to input_event to easily pick up these events.
-Note: _input_event() requires input_pickable to be true and at least one collision_layer bit to be set.
-"""
-func _input_event(_viewport: Viewport, event: InputEvent, _shape_idx: int) -> void:
-	if Input.is_action_pressed(&"left_click", true):
+func _ready() -> void:
+	# Connect mouse events
+	self.connect("input_event", Callable(self, "_on_input_event"))
+
+func _on_input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void:
+	# Detect left mouse click
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		score += 1
-		print(score)
+		print("Score: ", score)
+		emit_signal("click")  # Emit the click signal when clicked
 
- 
 func _mouse_enter() -> void:
-	self.set_collision_mask_value(1, true)
+	is_mouseover = true
+	print("Mouse entered button area")
 
 func _mouse_exit() -> void:
 	is_mouseover = false
-
-
-
-func _process(_delta: float) -> void:
-	pass 
-	
+	print("Mouse exited button area")

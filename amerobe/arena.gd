@@ -1,35 +1,26 @@
 extends Node
 
+#Declare the NodePath variables for Area2D and Clickbutt nodes
+@export var area_path: NodePath
+@export var click_button_path: NodePath
+
+#Cache the references
+var area_node: Area2D
+var click_button: Node
+
 func _ready() -> void:
-	# TODO: Load any persistent game assets and data
+	# Get the Area2D node and connect its signal
+	area_node = get_node(area_path) as Area2D
+	if area_node:
+		area_node.connect("area_entered", Callable(self, "_on_area_entered"))
 
-	# Call setup to any plugins?
+	# Get the Clickbutt node and connect its signal
+	click_button = get_node(click_button_path)
+	if click_button:
+		click_button.connect("click", Callable(self, "_on_click_butt_click"))
 
-	# TODO Much later: Set up ECS, message brokers / buses etc
+func _on_click_butt_click() -> void:
+	print("Click event detected in Arena script")
 
-	# TODO Much later: Show a splash screen with "Bloqsure Studios" logo, then fade to 
-	# a main menu screen
-
-	# TODO: Attach virtual audio interface, dispatch audio start event, 
-	# start music playback
-
-	main() 
-
-func main() -> void:
-	# TODO: Await signal / input from the user to change the active camera view to the 
-	# arena where our main game happens.
-
-	# TODO: Any prelude (i.e. show player controls, etc.)
-	# TODO: Set a callback (i.e. player clicks/presses 'A' or 'Enter' to start the game)
-
-	# TODO: Fire event that tells the reactor/event loop to start timers, and begin pushing 
-	# behaviors onto message queue/bus. (For tower defense, this would mean start sending enemies)
-	# But for a clicker game this is just a no-op event
-
-	print("Reached Arena")
-
-
-# Called each frame, where `delta` (duration of `tick` on the ECS) is elapsed since the last frame
-func _process(delta: float) -> void:
-	pass;
-	# print("Time elapsed: ", delta);
+func _on_area_entered(other_area: Node) -> void:
+	print("An area entered:", other_area.name)

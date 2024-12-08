@@ -16,7 +16,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Area2D" type="Area2D" parent="."]
-unique_name_in_owner = true
 script = ExtResource("2_s7ap7")
 
 [node name="Sprite2D" type="Sprite2D" parent="Area2D"]
