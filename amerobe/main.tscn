@@ -1,10 +1,11 @@
 [gd_scene load_steps=4 format=3 uid="uid://dnnpf1431v2yf"]
 
+[ext_resource type="Script" path="res://arena.gd" id="1_0noij"]
 [ext_resource type="Texture2D" uid="uid://cv4pd8jquu7kv" path="res://art/Kitchen Pixel Art.png" id="1_47gjb"]
 [ext_resource type="PackedScene" uid="uid://c45n3uxucohyq" path="res://player.tscn" id="2_nnkaw"]
-[ext_resource type="Script" path="res://clickbutt.gd" id="3_g5bfu"]
 
 [node name="Node" type="Node"]
+script = ExtResource("1_0noij")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchors_preset = -1
@@ -25,4 +26,3 @@ offset_top = 144.8
 offset_right = 41.6
 offset_bottom = 144.8
 grow_horizontal = 1
-script = ExtResource("3_g5bfu")

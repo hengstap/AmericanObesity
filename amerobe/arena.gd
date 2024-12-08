@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 func _ready() -> void:
 	# TODO: Load any persistent game assets and data
@@ -26,24 +26,10 @@ func main() -> void:
 	# behaviors onto message queue/bus. (For tower defense, this would mean start sending enemies)
 	# But for a clicker game this is just a no-op event
 
-	var i: int = 0;
-
-	while true:
-		# TODO: Derive the next reaction to take from the message/signal received.
-		# Signals might include:
-		# - Player clicked BurgerNode, therefore:
-		#   - Play a sound
-		#   - Increment the player's score
-		#   - Push a request to the reactor/event loop to see if we gain new capabilities
-		# - New power unlocked b/c score reached, therefore:
-		#   - Play a sound
-		#   - Update the UI to add a new permanent visual element, etc.
-		#   - Update the mode on UI elements to change how many points they yield when clicked, etc.
-		_process(0.016);
-		i += 1;
+	print("Reached Arena")
 
 
 # Called each frame, where `delta` (duration of `tick` on the ECS) is elapsed since the last frame
 func _process(delta: float) -> void:
-	return;
+	pass;
 	# print("Time elapsed: ", delta);

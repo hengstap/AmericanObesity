@@ -10,7 +10,7 @@
 	TODO
 	> Inherited from [CollisionObject2D](https://docs.godotengine.org/en/latest/classes/class_collisionobject2d.html#properties)
 """
-
+class_name Clickbutt
 extends CollisionShape2D
 
 signal click
@@ -21,13 +21,13 @@ signal click
 @export var is_mouseover: bool = false
 @export var quit: bool = false
 @export var _quit_complete: bool = false
-
+var collider: CollisionObject2D = $CollisionObject2D
 # If true, this object is pickable. 
 # A pickable object can detect the mouse pointer entering/leaving, and if the mouse is inside it, 
 # report input events. 
 # **Requires at least one collision_layer bit to be set.**
 # Able to be modified by getter and setter functions.
-var is_pickable: bool = true;
+# var is_pickable: bool = true;
 
 """
 Accepts unhandled InputEvents. shape_idx is the child index of the clicked Shape2D. 
@@ -35,36 +35,19 @@ Connect to input_event to easily pick up these events.
 Note: _input_event() requires input_pickable to be true and at least one collision_layer bit to be set.
 """
 func _input_event(_viewport: Viewport, event: InputEvent, _shape_idx: int) -> void:
-	if !is_mouseover:
-		return
 	if Input.is_action_pressed(&"left_click", true):
-		click.emit()
+		score += 1
+		print(score)
 
-func fire_click() -> bool:
-	return true
  
 func _mouse_enter() -> void:
-	is_mouseover = true
+	self.set_collision_mask_value(1, true)
 
 func _mouse_exit() -> void:
 	is_mouseover = false
 
-func _ready() -> void:
-	pass
+
 
 func _process(_delta: float) -> void:
-	print("We made it")
-	while true:
-		pass
-	# _quit_complete = await run_scoring_loop()
+	pass 
 	
-
-func run_scoring_loop() -> bool:
-	# TODO: Move this logic to a message broker
-	# TODO: Load initial value from save data
-	while !quit:
-		print("Running the clicker program")
-		await Signal(self, 'click')
-		score += 1
-		print("Click received!")
-	return true
