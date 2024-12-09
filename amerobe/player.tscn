@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c45n3uxucohyq"]
 
-[ext_resource type="Script" path="res://clickbutt.gd" id="2_s7ap7"]
+[ext_resource type="Script" uid="uid://dejy3mgyxftrs" path="res://clickbutt.gd" id="2_s7ap7"]
 [ext_resource type="Texture2D" uid="uid://diifn5qvjg2rb" path="res://converted_soda_can_sprite.png" id="2_wqtki"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ybwe5"]
