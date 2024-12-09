@@ -1,0 +1,22 @@
+[package]
+name = "engine"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.83"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+
+[dependencies.godot]
+# Enable the `experimental-threads` feature to use 
+# nested **exported** resources.
+version = "0.2"
+features = ["experimental-threads"]
+
+[build-dependencies]
+
+[build-dependencies.godot]
+version = "0.2"
+features = ["experimental-threads"]
