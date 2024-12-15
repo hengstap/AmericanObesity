@@ -1,7 +1,8 @@
 extends Node2D
 
 # Variables for game state
-var weight: int = 130
+var weight_lbs: int = 150
+var weight_cals: int = weight_lbs * 3500
 
 # Called when the scene is ready
 func _ready():
@@ -12,9 +13,9 @@ func _ready():
 func setup_buttons():
 	# Example calorie values and times for each button
 	var food_data = [
-		{"calories": 1, "time": 2.0},  # FoodButton1
-		{"calories": 2, "time": 3.0},  # FoodButton2
-		{"calories": 4, "time": 5.0}   # FoodButton3
+		{"calories": 150, "time": 1.0},  # FoodButton1
+		{"calories": 300, "time": 3.0},  # FoodButton2
+		{"calories": 500, "time": 5.0}   # FoodButton3
 	]
 	
 	for i in range(3):
@@ -47,7 +48,7 @@ func _on_food_button_pressed(button: TextureButton):
 # Called when a timer finishes
 func _on_timer_finished(button: TextureButton):
 	if button.has_meta("calories"):
-		weight += button.get_meta("calories")
+		weight_cals += button.get_meta("calories")
 		update_ui()
 	
 	# Re-enable the button after eating
@@ -58,4 +59,5 @@ func _on_timer_finished(button: TextureButton):
 
 # Update the UI with the current weight
 func update_ui():
-	$UI.text = "[center]Weight: " + str(weight) + " lbs[/center]"
+	$UI.text = "[center]Weight: " + str(weight_lbs) + " lbs[/center]"
+	$UI.text = "[center]Weight: " + str(weight_cals) + " cals[/center]"
