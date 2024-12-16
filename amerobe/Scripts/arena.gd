@@ -12,6 +12,7 @@ const CALORIES_PER_POUND: float = 3500.0
 # Onready variables for UI elements
 @onready var weight_label: Label = $UIBackground/VBoxContainer/WeightLabel
 @onready var calories_label: Label = $UIBackground/VBoxContainer/CaloriesLabel
+@onready var calorie_progress: ProgressBar = $UIBackground/VBoxContainer/CalorieProgress  # New progress bar
 
 func _ready() -> void:
 	setup_ui()
@@ -19,15 +20,69 @@ func _ready() -> void:
 	update_ui()
 
 func setup_ui() -> void:
-	# Set up weight label
-	if weight_label:
-		weight_label.text = "Weight: %0.1f lbs" % weight_lbs
-		theme_override_font_sizes(weight_label, 36)
+	# Get the UI background panel
+	var ui_background = get_node_or_null("/root/MainScene/UIBackground")
+	if ui_background:
+		var panel_style = StyleBoxFlat.new()
+		panel_style.bg_color = Color(0.1, 0.1, 0.1, 0.95)  # Dark background
+		panel_style.corner_radius_top_left = 10
+		panel_style.corner_radius_top_right = 10
+		panel_style.corner_radius_bottom_left = 10
+		panel_style.corner_radius_bottom_right = 10
+		ui_background.add_theme_stylebox_override("panel", panel_style)
+		ui_background.custom_minimum_size = Vector2(300, 200)  # Set minimum size
 	
-	# Set up calories label
+	# Set up weight label with style
+	if weight_label:
+		var label_style = StyleBoxFlat.new()
+		label_style.bg_color = Color(0.15, 0.15, 0.15, 0.9)  # Slightly lighter background
+		label_style.corner_radius_top_left = 5
+		label_style.corner_radius_top_right = 5
+		label_style.corner_radius_bottom_left = 5
+		label_style.corner_radius_bottom_right = 5
+		weight_label.add_theme_stylebox_override("normal", label_style)
+		weight_label.add_theme_font_size_override("font_size", 36)
+		weight_label.add_theme_color_override("font_color", Color(1, 1, 1, 1))
+		weight_label.text = "Weight: %0.1f lbs" % weight_lbs
+	
+	# Set up calories label with style
 	if calories_label:
+		var label_style = StyleBoxFlat.new()
+		label_style.bg_color = Color(0.15, 0.15, 0.15, 0.9)
+		label_style.corner_radius_top_left = 5
+		label_style.corner_radius_top_right = 5
+		label_style.corner_radius_bottom_left = 5
+		label_style.corner_radius_bottom_right = 5
+		calories_label.add_theme_stylebox_override("normal", label_style)
+		calories_label.add_theme_font_size_override("font_size", 30)
+		calories_label.add_theme_color_override("font_color", Color(1, 1, 1, 1))
 		calories_label.text = "Calories: %0.1f / %0.1f" % [weight_cals, CALORIES_PER_POUND]
-		theme_override_font_sizes(calories_label, 30)
+	
+	# Set up calorie progress bar
+	if calorie_progress:
+		calorie_progress.custom_minimum_size = Vector2(250, 20)  # Make it wider and taller
+		calorie_progress.max_value = CALORIES_PER_POUND
+		calorie_progress.value = weight_cals
+		calorie_progress.show_percentage = false  # Hide percentage text
+		
+		# Setup progress bar background style
+		var bg_style = StyleBoxFlat.new()
+		bg_style.bg_color = Color(0.2, 0.2, 0.2, 0.5)  # Dark background
+		bg_style.corner_radius_top_left = 6
+		bg_style.corner_radius_top_right = 6
+		bg_style.corner_radius_bottom_left = 6
+		bg_style.corner_radius_bottom_right = 6
+		
+		# Setup progress bar fill style
+		var fg_style = StyleBoxFlat.new()
+		fg_style.bg_color = Color(0.8, 0.3, 0.2, 1.0)  # Reddish-orange color for calories
+		fg_style.corner_radius_top_left = 6
+		fg_style.corner_radius_top_right = 6
+		fg_style.corner_radius_bottom_left = 6
+		fg_style.corner_radius_bottom_right = 6
+		
+		calorie_progress.add_theme_stylebox_override("background", bg_style)
+		calorie_progress.add_theme_stylebox_override("fill", fg_style)
 
 func theme_override_font_sizes(label: Label, size: int) -> void:
 	# In Godot 4.x, we use theme overrides for font size
@@ -92,9 +147,27 @@ func start_button_cooldown(button: TextureButton, cooldown_time: float) -> void:
 		
 		# Style the progress bar
 		progress.show_percentage = false
-		progress.custom_minimum_size = Vector2(button.size.x, 5)
-		progress.position = Vector2(0, button.size.y - 5)
+		progress.custom_minimum_size = Vector2(button.size.x, 8)  # Slightly taller
+		progress.position = Vector2(0, button.size.y - 8)
 		progress.max_value = cooldown_time
+		
+		# Setup progress bar style
+		var bg_style = StyleBoxFlat.new()
+		bg_style.bg_color = Color(0.2, 0.2, 0.2, 0.5)  # Dark background
+		bg_style.corner_radius_top_left = 4
+		bg_style.corner_radius_top_right = 4
+		bg_style.corner_radius_bottom_left = 4
+		bg_style.corner_radius_bottom_right = 4
+		
+		var fg_style = StyleBoxFlat.new()
+		fg_style.bg_color = Color(0.2, 0.8, 0.2, 1.0)  # Green progress
+		fg_style.corner_radius_top_left = 4
+		fg_style.corner_radius_top_right = 4
+		fg_style.corner_radius_bottom_left = 4
+		fg_style.corner_radius_bottom_right = 4
+		
+		progress.add_theme_stylebox_override("background", bg_style)
+		progress.add_theme_stylebox_override("fill", fg_style)
 	
 	# Animate cooldown
 	var tween = create_tween()
@@ -117,13 +190,21 @@ func play_button_effects(button: TextureButton) -> void:
 	# Play flash animation
 	var flash_sprite = button.get_node_or_null("FlashSprite")
 	if flash_sprite:
+		# Make sure the sprite is visible by default
 		flash_sprite.visible = true
+		# Set modulate to fully visible
+		flash_sprite.modulate.a = 1.0
+		# Play the animation
 		flash_sprite.play("flash")
 		
-		# Create timer for hiding flash
-		var timer = get_tree().create_timer(0.2)
-		await timer.timeout
-		flash_sprite.visible = false
+		# Create a tween for the flash effect
+		var tween = create_tween()
+		# Wait a tiny bit before starting fade
+		tween.tween_interval(0.1)
+		# Fade out over 0.2 seconds
+		tween.tween_property(flash_sprite, "modulate:a", 0.0, 0.2)
+		# Reset alpha when done
+		tween.tween_callback(func(): flash_sprite.modulate.a = 1.0)
 
 func update_ui() -> void:
 	# Update weight display
@@ -133,3 +214,9 @@ func update_ui() -> void:
 	# Update calories display
 	if calories_label:
 		calories_label.text = "Calories: %0.1f / %0.1f" % [weight_cals, CALORIES_PER_POUND]
+	
+	# Update calorie progress bar
+	if calorie_progress:
+		# Create a tween for smooth progress bar update
+		var tween = create_tween()
+		tween.tween_property(calorie_progress, "value", weight_cals, 0.2)
