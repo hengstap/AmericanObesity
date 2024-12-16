@@ -1,5 +1,9 @@
 extends Node2D
 
+# Signals
+signal calories_added(amount: float)
+signal weight_changed(new_weight: float)
+
 # Game state variables
 var weight_lbs: float = 150.0  # Starting weight
 var weight_cals: float = 0.0   # Calorie counter
@@ -51,20 +55,58 @@ func setup_buttons() -> void:
 			button.pressed.connect(_on_food_button_pressed.bind(button))
 
 func _on_food_button_pressed(button: TextureButton) -> void:
-	# Get calories from button metadata
+	# Check if button is on cooldown
+	if button.get_meta("is_cooling_down", false):
+		return
+		
+	# Get calories and cooldown from button metadata
 	var calories = button.get_meta("calories", 0.0)
+	var cooldown_time = button.get_meta("cooldown", 1.0)
 	
 	# Add calories and update weight if necessary
 	weight_cals += calories
+	emit_signal("calories_added", calories)
+	
 	while weight_cals >= CALORIES_PER_POUND:
 		weight_lbs += 1.0
 		weight_cals -= CALORIES_PER_POUND
+		emit_signal("weight_changed", weight_lbs)
 	
 	# Update UI
 	update_ui()
 	
-	# Play effects
+	# Play effects and start cooldown
 	play_button_effects(button)
+	start_button_cooldown(button, cooldown_time)
+
+func start_button_cooldown(button: TextureButton, cooldown_time: float) -> void:
+	# Set cooldown state
+	button.set_meta("is_cooling_down", true)
+	
+	# Create progress bar if it doesn't exist
+	var progress = button.get_node_or_null("CooldownProgress")
+	if not progress:
+		progress = ProgressBar.new()
+		progress.name = "CooldownProgress"
+		button.add_child(progress)
+		
+		# Style the progress bar
+		progress.show_percentage = false
+		progress.custom_minimum_size = Vector2(button.size.x, 5)
+		progress.position = Vector2(0, button.size.y - 5)
+		progress.max_value = cooldown_time
+	
+	# Animate cooldown
+	var tween = create_tween()
+	progress.value = cooldown_time
+	tween.tween_property(progress, "value", 0, cooldown_time)
+	
+	# Wait for cooldown
+	await get_tree().create_timer(cooldown_time).timeout
+	
+	# Reset cooldown state
+	button.set_meta("is_cooling_down", false)
+	progress.queue_free()
 
 func play_button_effects(button: TextureButton) -> void:
 	# Play sound effect
