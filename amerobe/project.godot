@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="amerobe"
-run/main_scene="res://Scenes/main.tscn"
+run/main_scene="res://Scenes/title_screen.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+SceneManager="*res://Scripts/scene_manager.gd"
 
 [display]
 

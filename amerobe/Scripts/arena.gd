@@ -91,9 +91,9 @@ func theme_override_font_sizes(label: Label, size: int) -> void:
 func setup_buttons() -> void:
 	# Food button data: calories and cooldown time
 	var food_data = [
-		{"calories": 150.0, "cooldown": 1.0},  # FoodButton1
-		{"calories": 300.0, "cooldown": 3.0},  # FoodButton2
-		{"calories": 500.0, "cooldown": 5.0}   # FoodButton3
+		{"calories": 200.0, "cooldown": .25},  # FoodButton1
+		{"calories": 750.0, "cooldown": 1.0},  # FoodButton2
+		{"calories": 1200.0, "cooldown": 3.0}   # FoodButton3
 	]
 	
 	# Set up each button

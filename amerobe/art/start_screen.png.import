@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b05owm8t83rhn"
-path="res://.godot/imported/nikacado_obese.png-770d95f6f6be3e4f30c4c787200c6e8f.ctex"
+uid="uid://v0fe1tm1ysyw"
+path="res://.godot/imported/start_screen.png-178aa79e8e25529caa2a6d2707935247.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/nikacado_obese.png"
-dest_files=["res://.godot/imported/nikacado_obese.png-770d95f6f6be3e4f30c4c787200c6e8f.ctex"]
+source_file="res://art/start_screen.png"
+dest_files=["res://.godot/imported/start_screen.png-178aa79e8e25529caa2a6d2707935247.ctex"]
 
 [params]
 
